@@ -5,44 +5,23 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  Switch,
+  SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import ReactJson from "react-json-view";
+import ReactJson, { ThemeKeys } from "react-json-view";
 import { getMaxDepth } from "../utils";
-
-const themesName = [
-  "dark",
-  "light",
-  "blue",
-  "red",
-  "green",
-  "purple",
-  "orange",
-  "yellow",
-  "pink",
-  "brown",
-  "grey",
-  "cyan",
-  "teal",
-  "lime",
-  "amber",
-  "indigo",
-  "blueGrey",
-  "deepOrange",
-  "deepPurple",
-  "lightBlue",
-];
+import { THEME } from "../constants";
 
 interface JsonSectionProps {
   object: any;
 }
 const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
   const [key, setKey] = React.useState("");
-  const [theme, setTheme] = React.useState("");
+  const [theme, setTheme] = React.useState("apathy");
   const [collapsedLevel, setCollapsedLevel] = React.useState(1);
+  const [data, setData] = React.useState(object);
+  const [whereAmI, setWhereAmI] = React.useState("root");
 
-  const objectKeys = useMemo(() => Object.keys(object), [object]);
   const objectMaxDepth = useMemo(() => {
     return getMaxDepth(object);
   }, [object]);
@@ -53,6 +32,20 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
       return;
     }
     setCollapsedLevel(Number(event.target.value));
+  };
+
+  const handleKeyChange = (event: SelectChangeEvent<string>) => {
+    const key = event.target.value;
+
+    if (key === "root") {
+      setData(object);
+      setWhereAmI("root");
+      return;
+    }
+
+    setWhereAmI((prev) => `${prev} > ${key}`);
+    setKey(key);
+    setData(data[key]);
   };
 
   return (
@@ -67,7 +60,7 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
             label="Theme"
             onChange={(event) => setTheme(event.target.value)}
           >
-            {themesName.map((name) => (
+            {THEME.map((name) => (
               <MenuItem value={name}>{name}</MenuItem>
             ))}
           </Select>
@@ -81,9 +74,10 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
             id="goto-select"
             value={key}
             label="Go to key"
-            onChange={(event) => setKey(event.target.value)}
+            onChange={(event) => handleKeyChange(event)}
           >
-            {objectKeys.map((key) => (
+            <MenuItem value="root">Back to root</MenuItem>
+            {Object.keys(data).map((key) => (
               <MenuItem value={key}>{key}</MenuItem>
             ))}
           </Select>
@@ -95,8 +89,15 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
           onChange={handleLevelChange}
         />
       </ActionsJsonContainer>
+      <div>{whereAmI} </div>
       <JsonContainer>
-        <ReactJson src={object} collapsed={collapsedLevel} />
+        <ReactJson
+          src={data}
+          collapsed={collapsedLevel}
+          theme={theme as ThemeKeys}
+          indentWidth={10}
+          name={null}
+        />
       </JsonContainer>
     </Wrapper>
   );
