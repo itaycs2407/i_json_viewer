@@ -64,6 +64,7 @@ const Container = styled.div`
 
 const StyledChip = styled(Chip)`
   cursor: pointer;
+  padding: 15px;
 `;
 
 export default WhereAmI;
