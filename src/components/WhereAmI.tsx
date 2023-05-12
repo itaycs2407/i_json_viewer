@@ -52,6 +52,7 @@ const WhereAmI: React.FC<WhereAmIProps> = ({
 };
 
 const Container = styled.div`
+  width: 50%;
   margin-top: 30px;
   display: flex;
   gap: 10px;

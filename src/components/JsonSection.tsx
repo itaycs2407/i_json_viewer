@@ -38,15 +38,22 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
   const handleKeyChange = (event: SelectChangeEvent<string>) => {
     const key = event.target.value;
 
+    if (typeof data[key] !== "object") {
+      return;
+    }
+
     if (key === "root") {
+      setCollapsedLevel(1);
+      setKey("");
       setData(object);
       setPath(["root"]);
       return;
     }
 
-    setPath((prev) => [...prev, key]);
+    setCollapsedLevel(1);
     setKey(key);
     setData(data[key]);
+    setPath((prev) => [...prev, key]);
   };
 
   return (
@@ -82,12 +89,14 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
             ))}
           </Select>
         </StyledFormControl>
-        <TextField
-          type="number"
-          inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-          value={collapsedLevel}
-          onChange={handleLevelChange}
-        />
+        <StyledNumberInputWrapper>
+          <TextField
+            type="number"
+            inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+            value={collapsedLevel}
+            onChange={handleLevelChange}
+          />
+        </StyledNumberInputWrapper>
       </ActionsJsonContainer>
       <WhereAmI
         object={object}
@@ -118,11 +127,16 @@ const Wrapper = styled.div`
 const ActionsJsonContainer = styled.div`
   width: 50%;
   display: flex;
+  justify-content: space-between;
   gap: 20px;
 `;
 
 const StyledFormControl = styled(FormControl)`
-  width: 30%;
+  width: 35%;
+`;
+
+const StyledNumberInputWrapper = styled(FormControl)`
+  width: 10%;
 `;
 
 const JsonContainer = styled.div`

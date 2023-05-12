@@ -249,8 +249,7 @@ const test1 = [
 const Home = () => {
   return (
     <Container>
-      <h1> my Json viewer</h1>
-      <JsonSection object={test1} />
+      <JsonSection object={testObj} />
     </Container>
   );
 };
