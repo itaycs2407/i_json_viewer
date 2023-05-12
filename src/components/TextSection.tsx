@@ -28,11 +28,11 @@ const TextSection: React.FC<TextSectionProps> = ({
 
   const handleTextSelection = () => {
     const selection = textareaRef.current?.value.substring(
-      textareaRef.current.selectionStart,
-      textareaRef.current.selectionEnd
+      textareaRef.current?.selectionStart,
+      textareaRef.current?.selectionEnd
     );
 
-    if (selection == null) {
+    if (selection == null || selection.length === 0) {
       return;
     }
 
@@ -95,7 +95,7 @@ const TextSection: React.FC<TextSectionProps> = ({
           >
             Fetch
           </Button>
-          <Button variant="contained" onClick={handleFetch} color="secondary">
+          <Button variant="contained" color="secondary">
             Set cookie
           </Button>
         </ButtonContainer>

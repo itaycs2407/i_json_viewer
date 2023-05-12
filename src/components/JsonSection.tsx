@@ -106,8 +106,10 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object, gotoPath }) => {
             label="Theme"
             onChange={handleThemeChange}
           >
-            {THEME.map((name) => (
-              <MenuItem value={name}>{name}</MenuItem>
+            {THEME.map((name, index) => (
+              <MenuItem key={index} value={name}>
+                {name}
+              </MenuItem>
             ))}
           </Select>
         </StyledFormControl>
@@ -122,8 +124,10 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object, gotoPath }) => {
             onChange={(event) => handleKeyChange(event)}
           >
             <MenuItem value="root">Back to root</MenuItem>
-            {keys.map((key) => (
-              <MenuItem value={key}>{key}</MenuItem>
+            {keys.map((key, index) => (
+              <MenuItem key={index} value={key}>
+                {key}
+              </MenuItem>
             ))}
           </Select>
         </StyledFormControl>

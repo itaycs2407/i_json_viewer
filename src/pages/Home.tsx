@@ -44,10 +44,13 @@ const Home = () => {
   }
 
   return (
-    <Container>
-      <JsonSection object={isJson ? JSON.parse(text) : ""} gotoPath={path} />
-      <TextSection setText={setText} text={text} setPath={setPath} />
-    </Container>
+    <>
+      <Container>
+        <JsonSection object={isJson ? JSON.parse(text) : ""} gotoPath={path} />
+        <TextSection setText={setText} text={text} setPath={setPath} />
+      </Container>
+      <Credit>Itay Cohen @ 2023</Credit>
+    </>
   );
 };
 
@@ -59,6 +62,14 @@ const Container = styled.div`
   gap: 20px;
   flex-direction: row;
   align-items: center;
+`;
+
+const Credit = styled.h6`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
 `;
 
 export default Home;

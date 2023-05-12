@@ -37,7 +37,7 @@ const WhereAmI: React.FC<WhereAmIProps> = ({
     <Container>
       {path.map((item, index) => {
         return (
-          <>
+          <React.Fragment key={index}>
             {index !== 0 && <TrendingFlat />}
             <StyledChip
               key={index}
@@ -47,7 +47,7 @@ const WhereAmI: React.FC<WhereAmIProps> = ({
               onClick={handleChipClick(index)}
               disabled={!isValidJson}
             />
-          </>
+          </React.Fragment>
         );
       })}
     </Container>
