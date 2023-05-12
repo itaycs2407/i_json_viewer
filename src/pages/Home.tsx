@@ -33,10 +33,11 @@ const testObj = {
 
 const Home = () => {
   const [text, setText] = useState("");
+  const [path, setPath] = useState<string | null>(null);
   let isJson = false;
+
   try {
     JSON.parse(text);
-    console.log(JSON.parse(text));
     isJson = true;
   } catch (err) {
     isJson = false;
@@ -44,8 +45,8 @@ const Home = () => {
 
   return (
     <Container>
-      <JsonSection object={isJson ? JSON.parse(text) : ""} />
-      <TextSection setText={setText} text={text} />
+      <JsonSection object={isJson ? JSON.parse(text) : ""} gotoPath={path} />
+      <TextSection setText={setText} text={text} setPath={setPath} />
     </Container>
   );
 };

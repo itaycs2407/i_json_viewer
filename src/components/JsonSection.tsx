@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled from "@emotion/styled";
 import {
   FormControl,
@@ -12,16 +12,18 @@ import ReactJson, { ThemeKeys } from "react-json-view";
 import { getMaxDepth } from "../utils";
 import { APP_KEY_THEME, THEME } from "../constants";
 import WhereAmI from "./WhereAmI";
+import { get } from "lodash";
 
 interface JsonSectionProps {
   object: any;
+  gotoPath: string | null;
 }
-const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
-  const [key, setKey] = React.useState("");
-  const [theme, setTheme] = React.useState("");
+const JsonSection: React.FC<JsonSectionProps> = ({ object, gotoPath }) => {
+  const [key, setKey] = useState("");
+  const [theme, setTheme] = useState("");
   const [collapsedLevel, setCollapsedLevel] = React.useState(1);
-  const [data, setData] = React.useState(object);
-  const [path, setPath] = React.useState(["root"]);
+  const [data, setData] = useState(object);
+  const [path, setPath] = useState(["root"]);
 
   useEffect(() => {
     const storedTheme = localStorage.getItem(APP_KEY_THEME);
@@ -32,9 +34,18 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
   });
 
   useEffect(() => {
-    setData(object);
-    setPath(["root"]);
-  }, [object]);
+    if (gotoPath == null) {
+      setData(object);
+      setPath(["root"]);
+    } else {
+      const newRoot = gotoPath.split(".");
+      const newObject = get(object, newRoot.join("."));
+      if (newObject != null) {
+        setData(newObject);
+        setPath(["root", ...newRoot]);
+      }
+    }
+  }, [object, gotoPath]);
 
   const isValidJson = useMemo(() => {
     return data !== "";
