@@ -11,6 +11,7 @@ import {
 import ReactJson, { ThemeKeys } from "react-json-view";
 import { getMaxDepth } from "../utils";
 import { THEME } from "../constants";
+import WhereAmI from "./WhereAmI";
 
 interface JsonSectionProps {
   object: any;
@@ -20,11 +21,11 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
   const [theme, setTheme] = React.useState("apathy");
   const [collapsedLevel, setCollapsedLevel] = React.useState(1);
   const [data, setData] = React.useState(object);
-  const [whereAmI, setWhereAmI] = React.useState("root");
+  const [path, setPath] = React.useState(["root"]);
 
   const objectMaxDepth = useMemo(() => {
-    return getMaxDepth(object);
-  }, [object]);
+    return getMaxDepth(data);
+  }, [data]);
 
   const handleLevelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const level = Number(event.target.value);
@@ -39,11 +40,11 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
 
     if (key === "root") {
       setData(object);
-      setWhereAmI("root");
+      setPath(["root"]);
       return;
     }
 
-    setWhereAmI((prev) => `${prev} > ${key}`);
+    setPath((prev) => [...prev, key]);
     setKey(key);
     setData(data[key]);
   };
@@ -68,7 +69,6 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
 
         <StyledFormControl>
           <InputLabel id="goto-select">Go to key</InputLabel>
-
           <Select
             labelId="goto-select"
             id="goto-select"
@@ -89,7 +89,12 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
           onChange={handleLevelChange}
         />
       </ActionsJsonContainer>
-      <div>{whereAmI} </div>
+      <WhereAmI
+        object={object}
+        setData={setData}
+        path={path}
+        setPath={setPath}
+      />
       <JsonContainer>
         <ReactJson
           src={data}
