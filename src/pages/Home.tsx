@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useState } from "react";
 import JsonSection from "../components/JsonSection";
+import TextSection from "../components/TextSection";
 
 const testObj = {
   ke54y1: true,
@@ -247,9 +248,24 @@ const test1 = [
   },
 ];
 const Home = () => {
+  const [text, setText] = useState("");
+
+  console.log(text);
+
+  let isJson = false;
+
+  try {
+    JSON.parse(text);
+    console.log(JSON.parse(text));
+    isJson = true;
+  } catch (err) {
+    isJson = false;
+  }
+
   return (
     <Container>
-      <JsonSection object={testObj} />
+      <JsonSection object={isJson ? JSON.parse(text) : ""} />
+      <TextSection setText={setText} text={text} />
     </Container>
   );
 };
@@ -259,7 +275,8 @@ const Container = styled.div`
   padding: 20px;
   background-color: #f5f5f5;
   display: flex;
-  flex-direction: column;
+  gap: 20px;
+  flex-direction: row;
   align-items: center;
 `;
 

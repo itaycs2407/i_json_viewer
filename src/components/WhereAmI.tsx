@@ -9,6 +9,7 @@ interface WhereAmIProps {
   setData: React.Dispatch<React.SetStateAction<any>>;
   path: string[];
   setPath: React.Dispatch<React.SetStateAction<string[]>>;
+  isValidJson: boolean;
 }
 
 const WhereAmI: React.FC<WhereAmIProps> = ({
@@ -16,6 +17,7 @@ const WhereAmI: React.FC<WhereAmIProps> = ({
   setData,
   path,
   setPath,
+  isValidJson,
 }) => {
   const handleChipClick = (index: number) => () => {
     if (index === 0) {
@@ -43,6 +45,7 @@ const WhereAmI: React.FC<WhereAmIProps> = ({
               label={item}
               size="small"
               onClick={handleChipClick(index)}
+              disabled={!isValidJson}
             />
           </>
         );
@@ -52,7 +55,6 @@ const WhereAmI: React.FC<WhereAmIProps> = ({
 };
 
 const Container = styled.div`
-  width: 50%;
   margin-top: 30px;
   display: flex;
   gap: 10px;

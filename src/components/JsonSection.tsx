@@ -31,6 +31,15 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
     }
   });
 
+  useEffect(() => {
+    setData(object);
+    setPath(["root"]);
+  }, [object]);
+
+  const isValidJson = useMemo(() => {
+    return data !== "";
+  }, [data]);
+
   const objectMaxDepth = useMemo(() => {
     return getMaxDepth(data);
   }, [data]);
@@ -121,29 +130,33 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
         setData={setData}
         path={path}
         setPath={setPath}
+        isValidJson={isValidJson}
       />
-      <JsonContainer>
-        <ReactJson
-          src={data}
-          collapsed={collapsedLevel}
-          theme={theme as ThemeKeys}
-          indentWidth={10}
-          name={null}
-        />
-      </JsonContainer>
+      {isValidJson ? (
+        <JsonContainer>
+          <ReactJson
+            src={data}
+            collapsed={collapsedLevel}
+            theme={theme as ThemeKeys}
+            indentWidth={10}
+            name={null}
+          />
+        </JsonContainer>
+      ) : (
+        <div>Empty</div>
+      )}
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: 50%;
   height: 100%;
   display: flex;
   flex-direction: column;
 `;
 
 const ActionsJsonContainer = styled.div`
-  width: 50%;
   display: flex;
   justify-content: space-between;
   gap: 20px;
@@ -159,7 +172,6 @@ const StyledNumberInputWrapper = styled(FormControl)`
 
 const JsonContainer = styled.div`
   margin-top: 30px;
-  width: 50%;
   overflow-y: scroll;
   border: 1px solid black;
   height: 70%;
