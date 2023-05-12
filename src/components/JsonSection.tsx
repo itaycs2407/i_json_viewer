@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import styled from "@emotion/styled";
 import {
   FormControl,
@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import ReactJson, { ThemeKeys } from "react-json-view";
 import { getMaxDepth } from "../utils";
-import { THEME } from "../constants";
+import { APP_KEY_THEME, THEME } from "../constants";
 import WhereAmI from "./WhereAmI";
 
 interface JsonSectionProps {
@@ -18,10 +18,18 @@ interface JsonSectionProps {
 }
 const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
   const [key, setKey] = React.useState("");
-  const [theme, setTheme] = React.useState("apathy");
+  const [theme, setTheme] = React.useState("");
   const [collapsedLevel, setCollapsedLevel] = React.useState(1);
   const [data, setData] = React.useState(object);
   const [path, setPath] = React.useState(["root"]);
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem(APP_KEY_THEME);
+
+    if (storedTheme != null) {
+      setTheme(storedTheme);
+    }
+  });
 
   const objectMaxDepth = useMemo(() => {
     return getMaxDepth(data);
@@ -37,6 +45,13 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
       return;
     }
     setCollapsedLevel(Number(event.target.value));
+  };
+
+  const handleThemeChange = (event: SelectChangeEvent<string>) => {
+    const newTheme = event.target.value;
+    localStorage.setItem(APP_KEY_THEME, newTheme ?? "apathy");
+
+    setTheme(newTheme);
   };
 
   const handleKeyChange = (event: SelectChangeEvent<string>) => {
@@ -69,7 +84,7 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
             id="theme-select"
             value={theme}
             label="Theme"
-            onChange={(event) => setTheme(event.target.value)}
+            onChange={handleThemeChange}
           >
             {THEME.map((name) => (
               <MenuItem value={name}>{name}</MenuItem>

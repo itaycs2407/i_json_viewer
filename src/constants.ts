@@ -37,3 +37,5 @@ export const THEME = [
   "tube",
   "twilight",
 ];
+
+export const APP_KEY_THEME = "iJSONTheme";
