@@ -27,6 +27,10 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
     return getMaxDepth(data);
   }, [data]);
 
+  const keys = useMemo(() => {
+    return Object.keys(data).filter((key) => typeof data[key] === "object");
+  }, [data]);
+
   const handleLevelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const level = Number(event.target.value);
     if (level > objectMaxDepth || level < 1) {
@@ -38,15 +42,14 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
   const handleKeyChange = (event: SelectChangeEvent<string>) => {
     const key = event.target.value;
 
-    if (typeof data[key] !== "object") {
+    if (key === "root") {
+      setCollapsedLevel(1);
+      setData(object);
+      setPath(["root"]);
       return;
     }
 
-    if (key === "root") {
-      setCollapsedLevel(1);
-      setKey("");
-      setData(object);
-      setPath(["root"]);
+    if (typeof data[key] !== "object") {
       return;
     }
 
@@ -84,7 +87,7 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object }) => {
             onChange={(event) => handleKeyChange(event)}
           >
             <MenuItem value="root">Back to root</MenuItem>
-            {Object.keys(data).map((key) => (
+            {keys.map((key) => (
               <MenuItem value={key}>{key}</MenuItem>
             ))}
           </Select>
