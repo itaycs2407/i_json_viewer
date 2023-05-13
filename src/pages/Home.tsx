@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import JsonSection from "../components/JsonSection";
 import TextSection from "../components/TextSection";
 
@@ -34,20 +34,35 @@ const testObj = {
 const Home = () => {
   const [text, setText] = useState("");
   const [path, setPath] = useState<string | null>(null);
-  let isJson = false;
+  const [copyContent, setCopyContent] = useState<string[]>([]);
 
-  try {
-    JSON.parse(text);
-    isJson = true;
-  } catch (err) {
-    isJson = false;
-  }
+  const addCopyContent = (content: string) => {
+    setCopyContent((prev) => [...prev, content]);
+  };
+  const isJson = useMemo(() => {
+    try {
+      JSON.parse(text);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }, [text]);
 
   return (
     <>
       <Container>
-        <JsonSection object={isJson ? JSON.parse(text) : ""} gotoPath={path} />
-        <TextSection setText={setText} text={text} setPath={setPath} />
+        <JsonSection
+          object={isJson ? JSON.parse(text) : ""}
+          gotoPath={path}
+          addCopyContent={addCopyContent}
+        />
+        <TextSection
+          setText={setText}
+          text={text}
+          setPath={setPath}
+          copiedContent={copyContent}
+          setCopyContent={setCopyContent}
+        />
       </Container>
       <Credit>Itay Cohen @ 2023</Credit>
     </>

@@ -13,12 +13,18 @@ import { getMaxDepth } from "../utils";
 import { APP_KEY_THEME, THEME } from "../constants";
 import WhereAmI from "./WhereAmI";
 import { get } from "lodash";
+import EmptySection from "./EmptySection";
 
 interface JsonSectionProps {
   object: any;
   gotoPath: string | null;
+  addCopyContent: (content: string) => void;
 }
-const JsonSection: React.FC<JsonSectionProps> = ({ object, gotoPath }) => {
+const JsonSection: React.FC<JsonSectionProps> = ({
+  object,
+  gotoPath,
+  addCopyContent,
+}) => {
   const [key, setKey] = useState("");
   const [theme, setTheme] = useState("");
   const [collapsedLevel, setCollapsedLevel] = React.useState(1);
@@ -32,6 +38,14 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object, gotoPath }) => {
       setTheme(storedTheme);
     }
   });
+
+  useEffect(() => {
+    window.addEventListener("copy", handleCopy);
+
+    return () => {
+      window.removeEventListener("copy", handleCopy);
+    };
+  }, []);
 
   useEffect(() => {
     if (gotoPath == null) {
@@ -65,6 +79,11 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object, gotoPath }) => {
       return;
     }
     setCollapsedLevel(Number(event.target.value));
+  };
+
+  const handleCopy = async () => {
+    const content = await navigator.clipboard.readText();
+    addCopyContent(content);
   };
 
   const handleThemeChange = (event: SelectChangeEvent<string>) => {
@@ -158,7 +177,7 @@ const JsonSection: React.FC<JsonSectionProps> = ({ object, gotoPath }) => {
           />
         </JsonContainer>
       ) : (
-        <div>Empty</div>
+        <EmptySection />
       )}
     </Wrapper>
   );
