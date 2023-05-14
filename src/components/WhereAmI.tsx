@@ -60,6 +60,7 @@ const Container = styled.div`
   gap: 10px;
   flex-direction: row;
   align-items: center;
+  overflow: auto;
 `;
 
 const StyledChip = styled(Chip)`

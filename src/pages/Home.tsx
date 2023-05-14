@@ -52,7 +52,7 @@ const Home = () => {
     <>
       <Container>
         <JsonSection
-          object={isJson ? JSON.parse(text) : ""}
+          object={isJson ? { ...JSON.parse(text) } : ""}
           gotoPath={path}
           addCopyContent={addCopyContent}
         />

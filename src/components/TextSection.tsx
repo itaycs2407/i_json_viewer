@@ -131,9 +131,6 @@ const TextSection: React.FC<TextSectionProps> = ({
           >
             {isLoading ? <CircularProgress color="inherit" /> : "Fetch"}
           </Button>
-          <Button variant="contained" color="secondary">
-            Set cookie
-          </Button>
         </ButtonContainer>
       </FetchContainer>
       <Dialog
@@ -187,7 +184,7 @@ const FetchContainer = styled.div`
 `;
 
 const StyledTextField = styled(TextField)`
-  width: 60%;
+  width: 85%;
 `;
 
 const ButtonContainer = styled.div`

@@ -73,6 +73,10 @@ const JsonSection: React.FC<JsonSectionProps> = ({
     return Object.keys(data).filter((key) => typeof data[key] === "object");
   }, [data]);
 
+  const isBackToRootDisabled = useMemo(() => {
+    return path.length === 1;
+  }, [path]);
+
   const handleLevelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const level = Number(event.target.value);
     if (level > objectMaxDepth || level < 1) {
@@ -142,7 +146,9 @@ const JsonSection: React.FC<JsonSectionProps> = ({
             label="Go to key"
             onChange={(event) => handleKeyChange(event)}
           >
-            <MenuItem value="root">Back to root</MenuItem>
+            <MenuItem value="root" disabled={isBackToRootDisabled}>
+              Back to root
+            </MenuItem>
             {keys.map((key, index) => (
               <MenuItem key={index} value={key}>
                 {key}
