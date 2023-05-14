@@ -28,6 +28,7 @@ const Container = styled.li`
   flex-direction: column;
   align-items: center;
   box-shadow: rgba(0, 0, 0, 0.15) 0 5px 15px 0;
+  overflow-x: auto;
 `;
 
 const StyledPre = styled.pre`
