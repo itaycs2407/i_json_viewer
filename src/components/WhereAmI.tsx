@@ -58,6 +58,7 @@ const Container = styled.div`
   margin-top: 30px;
   display: flex;
   gap: 10px;
+  height: 45px;
   flex-direction: row;
   align-items: center;
   overflow: auto;
