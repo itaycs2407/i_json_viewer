@@ -70,7 +70,9 @@ const JsonSection: React.FC<JsonSectionProps> = ({
   }, [data]);
 
   const keys = useMemo(() => {
-    return Object.keys(data).filter((key) => typeof data[key] === "object");
+    return Object.keys(data)
+      .filter((key) => typeof data[key] === "object")
+      .filter((key) => data[key] != null);
   }, [data]);
 
   const isBackToRootDisabled = useMemo(() => {
