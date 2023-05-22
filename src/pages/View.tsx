@@ -31,7 +31,7 @@ const testObj = {
   },
 };
 
-const Home = () => {
+const View = () => {
   const [text, setText] = useState("");
   const [path, setPath] = useState<string | null>(null);
   const [copyContent, setCopyContent] = useState<string[]>([]);
@@ -78,4 +78,4 @@ const Container = styled.div`
   align-items: center;
 `;
 
-export default Home;
+export default View;
