@@ -64,27 +64,18 @@ const Home = () => {
           setCopyContent={setCopyContent}
         />
       </Container>
-      <Credit>Itay Cohen @ 2023</Credit>
     </>
   );
 };
 
 const Container = styled.div`
-  height: 93vh;
+  height: 80vh;
   padding: 20px;
   background-color: #f5f5f5;
   display: flex;
   gap: 20px;
   flex-direction: row;
   align-items: center;
-`;
-
-const Credit = styled.h6`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  margin: 0;
-  padding: 0;
 `;
 
 export default Home;

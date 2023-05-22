@@ -41,7 +41,7 @@ const WhereAmI: React.FC<WhereAmIProps> = ({
             {index !== 0 && <TrendingFlat />}
             <StyledChip
               key={index}
-              color="secondary"
+              color="primary"
               label={item}
               size="small"
               onClick={handleChipClick(index)}

@@ -130,6 +130,7 @@ const JsonSection: React.FC<JsonSectionProps> = ({
             value={theme}
             label="Theme"
             onChange={handleThemeChange}
+            size="small"
           >
             {THEME.map((name, index) => (
               <MenuItem key={index} value={name}>
@@ -147,6 +148,7 @@ const JsonSection: React.FC<JsonSectionProps> = ({
             value={key}
             label="Go to key"
             onChange={(event) => handleKeyChange(event)}
+            size="small"
           >
             <MenuItem value="root" disabled={isBackToRootDisabled}>
               Back to root
@@ -164,6 +166,7 @@ const JsonSection: React.FC<JsonSectionProps> = ({
             inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
             value={collapsedLevel}
             onChange={handleLevelChange}
+            size="small"
           />
         </StyledNumberInputWrapper>
       </ActionsJsonContainer>

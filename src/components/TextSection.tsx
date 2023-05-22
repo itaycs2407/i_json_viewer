@@ -6,7 +6,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   TextField,
 } from "@mui/material";
@@ -127,7 +126,7 @@ const TextSection: React.FC<TextSectionProps> = ({
             variant="contained"
             onClick={handleFetch}
             disabled={url.length === 0}
-            color="secondary"
+            size="small"
           >
             {isLoading ? <CircularProgress color="inherit" /> : "Fetch"}
           </Button>
