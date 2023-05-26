@@ -49,10 +49,10 @@ export enum PageType {
 export const pageColors: Record<
   PageType,
   | "success"
-  | "secondary"
   | "primary"
   | "inherit"
   | "error"
+  | "secondary"
   | "info"
   | "warning"
   | undefined
