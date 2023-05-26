@@ -13,6 +13,7 @@ import { findKeyPath } from "../utils";
 import { get } from "lodash";
 import axios from "axios";
 import CopyContent from "./CopyContent";
+import { ActionContainer, Textarea, TextWrapper } from "../style";
 
 interface TextSectionProps {
   text: string;
@@ -83,23 +84,32 @@ const TextSection: React.FC<TextSectionProps> = ({
   };
 
   return (
-    <Wrapper>
+    <TextWrapper>
       <ActionContainer>
-        <Button variant="contained" onClick={handleTextSelection}>
+        <Button variant="contained" onClick={handleTextSelection} size="small">
           Get Selected
         </Button>
         {copiedContent.length > 0 && (
           <CopyContentContainer>
-            <Button variant="contained" onClick={handleOpenModal}>
+            <Button variant="contained" onClick={handleOpenModal} size="small">
               Content ({copiedContent.length})
             </Button>
-            <Button variant="contained" onClick={() => setCopyContent([])}>
+            <Button
+              variant="contained"
+              onClick={() => setCopyContent([])}
+              size="small"
+            >
               X
             </Button>
           </CopyContentContainer>
         )}
 
-        <Button variant="contained" onClick={handleClear}>
+        <Button
+          variant="contained"
+          onClick={handleClear}
+          disabled={text.length === 0}
+          size="small"
+        >
           Clear
         </Button>
       </ActionContainer>
@@ -150,30 +160,9 @@ const TextSection: React.FC<TextSectionProps> = ({
           <Button onClick={handleCloseModal}>Close</Button>
         </DialogActions>
       </Dialog>
-    </Wrapper>
+    </TextWrapper>
   );
 };
-
-const Wrapper = styled.div`
-  width: 50%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Textarea = styled.textarea`
-  width: 100%;
-  height: 100%;
-  resize: none;
-`;
-
-const ActionContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 10px;
-`;
 
 const FetchContainer = styled.div`
   margin-top: 10px;

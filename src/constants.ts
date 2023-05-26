@@ -39,3 +39,25 @@ export const THEME = [
 ];
 
 export const APP_KEY_THEME = "iJSONTheme";
+
+export enum PageType {
+  View = "view",
+  Compare = "compare",
+  Schema = "schema",
+}
+
+export const pageColors: Record<
+  PageType,
+  | "success"
+  | "secondary"
+  | "primary"
+  | "inherit"
+  | "error"
+  | "info"
+  | "warning"
+  | undefined
+> = {
+  [PageType.Compare]: "success",
+  [PageType.Schema]: "secondary",
+  [PageType.View]: "primary",
+};
