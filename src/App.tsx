@@ -5,8 +5,8 @@ import styled from "@emotion/styled";
 import {
   Redirect,
   Route,
-  BrowserRouter as Router,
   Switch,
+  BrowserRouter as Router,
 } from "react-router-dom";
 import Compare from "./pages/Compare";
 import Schema from "./pages/Schema";

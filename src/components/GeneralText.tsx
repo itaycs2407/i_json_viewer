@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Button } from "@mui/material";
 import { ActionContainer, Textarea, TextWrapper } from "../style";
 import { pageColors, PageType } from "../constants";

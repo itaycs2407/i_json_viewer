@@ -1,38 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@mui/material";
 import styled from "@emotion/styled";
+import { useHistory } from "react-router-dom";
 
-const Navbar = () => (
-  <Container>
-    <Button
-      variant="contained"
-      onClick={() => (window.location.href = "/view")}
-      size="small"
-      disabled={window.location.pathname === "/view"}
-    >
-      View
-    </Button>
-    <Button
-      variant="contained"
-      onClick={() => (window.location.href = "/compare")}
-      size="small"
-      color="success"
-      disabled={window.location.pathname === "/compare"}
-    >
-      Compare
-    </Button>
-    <Button
-      variant="contained"
-      onClick={() => (window.location.href = "/schema")}
-      size="small"
-      color="secondary"
-      // disabled={window.location.pathname === "/schema"}
-      disabled
-    >
-      Validate Schema
-    </Button>
-  </Container>
-);
+const Navbar = () => {
+  const history = useHistory();
+  const [path, setPath] = useState(history.location.pathname);
+
+  const handlePageChange = (path: string) => {
+    history.push(path);
+    setPath(path);
+  };
+
+  return (
+    <Container>
+      <Button
+        variant="contained"
+        onClick={() => handlePageChange("/view")}
+        size="small"
+        disabled={path === "/view"}
+      >
+        View
+      </Button>
+      <Button
+        variant="contained"
+        onClick={() => handlePageChange("/compare")}
+        size="small"
+        color="success"
+        disabled={path === "/compare"}
+      >
+        Compare
+      </Button>
+      <Button
+        variant="contained"
+        onClick={() => handlePageChange("/schema")}
+        size="small"
+        color="secondary"
+        // disabled={path === "/schema"}
+        disabled
+      >
+        Validate Schema
+      </Button>
+    </Container>
+  );
+};
 
 const Container = styled.div`
   display: flex;
