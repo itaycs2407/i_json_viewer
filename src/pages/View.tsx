@@ -69,7 +69,7 @@ const View = () => {
 };
 
 const Container = styled.div`
-  height: 80vh;
+  height: 90vh;
   padding: 20px;
   background-color: #f5f5f5;
   display: flex;

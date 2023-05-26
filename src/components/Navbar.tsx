@@ -26,7 +26,8 @@ const Navbar = () => (
       onClick={() => (window.location.href = "/schema")}
       size="small"
       color="secondary"
-      disabled={window.location.pathname === "/schema"}
+      // disabled={window.location.pathname === "/schema"}
+      disabled
     >
       Validate Schema
     </Button>

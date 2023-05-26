@@ -17,15 +17,18 @@ const GeneralText: React.FC<GeneralTextProps> = ({ type, text, setText }) => {
     setText("");
     textareaRef.current?.focus();
   };
-  const handleUploadFile = (files: any) => {
+  const handleUploadFile = (files: FileList | null) => {
+    if (files == null || files.length === 0) {
+      return;
+    }
+
     const file = files[0];
-    const a = new FileReader();
-    a.onloadend = function (event) {
-      const b = a.result;
-      setText(b as string);
-      console.log(b);
+    const fileReader = new FileReader();
+    fileReader.onloadend = function () {
+      setText(fileReader.result as string);
     };
-    a.readAsText(file);
+
+    fileReader.readAsText(file);
   };
   return (
     <TextWrapper>
@@ -68,6 +71,7 @@ const GeneralText: React.FC<GeneralTextProps> = ({ type, text, setText }) => {
 };
 
 const StyledTextarea = styled(Textarea)`
-  height: 40%;
+  min-height: 70%;
+  max-height: 70%;
 `;
 export default GeneralText;
