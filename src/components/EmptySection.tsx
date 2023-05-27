@@ -1,14 +1,16 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-const EmptySection = () => {
-  return (
-    <Container>How much time does it take to do copy-paste ?!?!?!</Container>
-  );
+interface EmptySectionProps {
+  text: string;
+}
+
+const EmptySection: React.FC<EmptySectionProps> = ({ text }) => {
+  return <Container>{text}</Container>;
 };
 
 const Container = styled.div`
-  height: 93vh;
+  height: 50vh;
   padding: 20px;
   display: flex;
   justify-content: center;

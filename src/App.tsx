@@ -9,7 +9,6 @@ import {
   BrowserRouter as Router,
 } from "react-router-dom";
 import Compare from "./pages/Compare";
-import Schema from "./pages/Schema";
 
 function App() {
   return (
@@ -19,7 +18,6 @@ function App() {
         <Switch>
           <Route exact path="/view" component={View} />
           <Route exact path="/compare" component={Compare} />
-          <Route exact path="/schema" component={Schema} />
           <Redirect from="/" to="/view" />
         </Switch>
       </Router>

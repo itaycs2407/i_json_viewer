@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import GeneralText from "../components/GeneralText";
 import ReactDiffViewer from "react-diff-viewer";
 import { PageType } from "../constants";
+import EmptySection from "../components/EmptySection";
 
 const Compare = () => {
   const [firstContent, setFirstContent] = useState("");
@@ -23,7 +24,7 @@ const Compare = () => {
         />
       </TextContainer>
       {firstContent.length === 0 || secondContent.length === 0 ? (
-        <div> Nothing to display.... yet</div>
+        <EmptySection text="Nothing to display.... yet" />
       ) : (
         <DiffContainer>
           <ReactDiffViewer

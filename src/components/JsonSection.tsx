@@ -188,7 +188,7 @@ const JsonSection: React.FC<JsonSectionProps> = ({
           />
         </JsonContainer>
       ) : (
-        <EmptySection />
+        <EmptySection text="How much time does it take to do copy-paste ?!?!?!" />
       )}
     </Wrapper>
   );

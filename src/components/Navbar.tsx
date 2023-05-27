@@ -31,16 +31,6 @@ const Navbar = () => {
       >
         Compare
       </Button>
-      <Button
-        variant="contained"
-        onClick={() => handlePageChange("/schema")}
-        size="small"
-        color="secondary"
-        // disabled={path === "/schema"}
-        disabled
-      >
-        Validate Schema
-      </Button>
     </Container>
   );
 };
