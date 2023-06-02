@@ -5,10 +5,23 @@ import ReactDiffViewer from "react-diff-viewer";
 import { PageType } from "../constants";
 import EmptySection from "../components/EmptySection";
 
-const Compare = () => {
-  const [firstContent, setFirstContent] = useState("");
-  const [secondContent, setSecondContent] = useState("");
+interface CompareProps {
+  firstContent: string;
+  setFirstContent: React.Dispatch<React.SetStateAction<string>>;
+  secondContent: string;
+  setSecondContent: React.Dispatch<React.SetStateAction<string>>;
+  serViewJson: React.Dispatch<React.SetStateAction<string>>;
+  setPath: React.Dispatch<React.SetStateAction<string>>;
+}
 
+const Compare: React.FC<CompareProps> = ({
+  firstContent,
+  setFirstContent,
+  setSecondContent,
+  secondContent,
+  serViewJson,
+  setPath,
+}) => {
   return (
     <Container>
       <TextContainer>
@@ -16,11 +29,15 @@ const Compare = () => {
           type={PageType.Compare}
           setText={setFirstContent}
           text={firstContent}
+          serViewJson={serViewJson}
+          setPath={setPath}
         />
         <GeneralText
           type={PageType.Compare}
           setText={setSecondContent}
           text={secondContent}
+          serViewJson={serViewJson}
+          setPath={setPath}
         />
       </TextContainer>
       {firstContent.length === 0 || secondContent.length === 0 ? (

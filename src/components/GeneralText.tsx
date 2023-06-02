@@ -3,13 +3,24 @@ import { Button } from "@mui/material";
 import { ActionContainer, Textarea, TextWrapper } from "../style";
 import { pageColors, PageType } from "../constants";
 import styled from "@emotion/styled";
+import { useHistory } from "react-router-dom";
 
 interface GeneralTextProps {
   type: PageType;
   text: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
+  serViewJson: React.Dispatch<React.SetStateAction<string>>;
+  setPath: React.Dispatch<React.SetStateAction<string>>;
 }
-const GeneralText: React.FC<GeneralTextProps> = ({ type, text, setText }) => {
+
+const GeneralText: React.FC<GeneralTextProps> = ({
+  type,
+  text,
+  setText,
+  serViewJson,
+  setPath,
+}) => {
+  const history = useHistory();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const color = pageColors[type] ?? undefined;
@@ -17,6 +28,7 @@ const GeneralText: React.FC<GeneralTextProps> = ({ type, text, setText }) => {
     setText("");
     textareaRef.current?.focus();
   };
+
   const handleUploadFile = (files: FileList | null) => {
     if (files == null || files.length === 0) {
       return;
@@ -30,24 +42,42 @@ const GeneralText: React.FC<GeneralTextProps> = ({ type, text, setText }) => {
 
     fileReader.readAsText(file);
   };
+
+  const handleView = () => {
+    serViewJson(text);
+    setPath("/view");
+    history.push("/view");
+  };
+
   return (
     <TextWrapper>
       <ActionContainer>
-        <Button
-          variant="contained"
-          component="label"
-          color={color}
-          size="small"
-        >
-          Upload File
-          <input
-            type="file"
-            hidden
-            accept=".json"
-            onChange={(event) => handleUploadFile(event.target.files)}
-          />
-        </Button>
+        <div>
+          <Button
+            variant="contained"
+            component="label"
+            color={color}
+            size="small"
+          >
+            Upload File
+            <input
+              type="file"
+              hidden
+              accept=".json"
+              onChange={(event) => handleUploadFile(event.target.files)}
+            />
+          </Button>
 
+          <MarginLeftButton
+            variant="contained"
+            onClick={handleView}
+            color={color}
+            size="small"
+            disabled={text.length === 0}
+          >
+            View
+          </MarginLeftButton>
+        </div>
         <Button
           variant="contained"
           onClick={handleClear}
@@ -74,4 +104,9 @@ const StyledTextarea = styled(Textarea)`
   min-height: 70%;
   max-height: 70%;
 `;
+
+const MarginLeftButton = styled(Button)`
+  margin-left: 10px;
+`;
+
 export default GeneralText;

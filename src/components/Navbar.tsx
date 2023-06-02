@@ -3,9 +3,13 @@ import { Button } from "@mui/material";
 import styled from "@emotion/styled";
 import { useHistory } from "react-router-dom";
 
-const Navbar = () => {
+interface NavbarProps {
+  path: string;
+  setPath: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ path, setPath }) => {
   const history = useHistory();
-  const [path, setPath] = useState(history.location.pathname);
 
   const handlePageChange = (path: string) => {
     history.push(path);

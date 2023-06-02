@@ -31,8 +31,13 @@ const testObj = {
   },
 };
 
-const View = () => {
-  const [text, setText] = useState("");
+interface ViewProps {
+  text: string;
+  setText: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const View: React.FC<ViewProps> = ({ text, setText }) => {
+  // const [text, setText] = useState("");
   const [path, setPath] = useState<string | null>(null);
   const [copyContent, setCopyContent] = useState<string[]>([]);
 

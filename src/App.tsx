@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import View from "./pages/View";
 import Navbar from "./components/Navbar";
 import styled from "@emotion/styled";
@@ -7,17 +7,47 @@ import {
   Route,
   Switch,
   BrowserRouter as Router,
+  useHistory,
 } from "react-router-dom";
 import Compare from "./pages/Compare";
 
 function App() {
+  const history = useHistory();
+  const [viewJson, setViewJson] = useState("");
+  const [firstCompare, setFirstCompare] = useState("");
+  const [secondCompare, setSecondCompare] = useState("");
+  const [path, setPath] = useState("/view");
+
+  useEffect(() => {
+    if (history?.location?.pathname == null) return;
+
+    setPath(history?.location?.pathname);
+  }, [history?.location?.pathname]);
+
   return (
     <>
       <Router>
-        <Navbar />
+        <Navbar setPath={setPath} path={path} />
         <Switch>
-          <Route exact path="/view" component={View} />
-          <Route exact path="/compare" component={Compare} />
+          <Route
+            exact
+            path="/view"
+            render={() => <View text={viewJson} setText={setViewJson} />}
+          />
+          <Route
+            exact
+            path="/compare"
+            render={() => (
+              <Compare
+                firstContent={firstCompare}
+                setFirstContent={setFirstCompare}
+                secondContent={secondCompare}
+                setSecondContent={setSecondCompare}
+                serViewJson={setViewJson}
+                setPath={setPath}
+              />
+            )}
+          />
           <Redirect from="/" to="/view" />
         </Switch>
       </Router>
