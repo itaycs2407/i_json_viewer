@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import GeneralText from "../components/GeneralText";
 import ReactDiffViewer from "react-diff-viewer";
@@ -10,7 +10,7 @@ interface CompareProps {
   setFirstContent: React.Dispatch<React.SetStateAction<string>>;
   secondContent: string;
   setSecondContent: React.Dispatch<React.SetStateAction<string>>;
-  serViewJson: React.Dispatch<React.SetStateAction<string>>;
+  setViewJson: React.Dispatch<React.SetStateAction<string>>;
   setPath: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -19,7 +19,7 @@ const Compare: React.FC<CompareProps> = ({
   setFirstContent,
   setSecondContent,
   secondContent,
-  serViewJson,
+  setViewJson,
   setPath,
 }) => {
   return (
@@ -29,14 +29,14 @@ const Compare: React.FC<CompareProps> = ({
           type={PageType.Compare}
           setText={setFirstContent}
           text={firstContent}
-          serViewJson={serViewJson}
+          setViewJson={setViewJson}
           setPath={setPath}
         />
         <GeneralText
           type={PageType.Compare}
           setText={setSecondContent}
           text={secondContent}
-          serViewJson={serViewJson}
+          setViewJson={setViewJson}
           setPath={setPath}
         />
       </TextContainer>

@@ -19,9 +19,11 @@ function App() {
   const [path, setPath] = useState("/view");
 
   useEffect(() => {
-    if (history?.location?.pathname == null) return;
+    const pathname = history?.location?.pathname;
 
-    setPath(history?.location?.pathname);
+    if (pathname == null) return;
+
+    setPath(pathname);
   }, [history?.location?.pathname]);
 
   return (
@@ -43,7 +45,7 @@ function App() {
                 setFirstContent={setFirstCompare}
                 secondContent={secondCompare}
                 setSecondContent={setSecondCompare}
-                serViewJson={setViewJson}
+                setViewJson={setViewJson}
                 setPath={setPath}
               />
             )}

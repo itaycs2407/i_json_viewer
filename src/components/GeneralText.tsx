@@ -9,7 +9,7 @@ interface GeneralTextProps {
   type: PageType;
   text: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
-  serViewJson: React.Dispatch<React.SetStateAction<string>>;
+  setViewJson: React.Dispatch<React.SetStateAction<string>>;
   setPath: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -17,7 +17,7 @@ const GeneralText: React.FC<GeneralTextProps> = ({
   type,
   text,
   setText,
-  serViewJson,
+  setViewJson,
   setPath,
 }) => {
   const history = useHistory();
@@ -44,7 +44,7 @@ const GeneralText: React.FC<GeneralTextProps> = ({
   };
 
   const handleView = () => {
-    serViewJson(text);
+    setViewJson(text);
     setPath("/view");
     history.push("/view");
   };
