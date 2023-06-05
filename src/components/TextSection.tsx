@@ -86,7 +86,12 @@ const TextSection: React.FC<TextSectionProps> = ({
   return (
     <TextWrapper>
       <ActionContainer>
-        <Button variant="contained" onClick={handleTextSelection} size="small">
+        <Button
+          variant="contained"
+          onClick={handleTextSelection}
+          size="small"
+          disabled={text.length === 0}
+        >
           Get Selected
         </Button>
         {copiedContent.length > 0 && (

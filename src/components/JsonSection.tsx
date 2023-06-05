@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import styled from "@emotion/styled";
 import {
+  Button,
   FormControl,
   InputLabel,
   MenuItem,
@@ -119,6 +120,19 @@ const JsonSection: React.FC<JsonSectionProps> = ({
     setPath((prev) => [...prev, key]);
   };
 
+  const pathPaginationBack = () => {
+    if (path.length === 2) {
+      setData(object);
+      setPath(["root"]);
+      return;
+    }
+
+    const newPath = path.slice(1, path.length - 1);
+
+    setData(get(object, newPath.join(".")));
+    setPath(["root", ...newPath]);
+  };
+
   return (
     <Wrapper>
       <ActionsJsonContainer>
@@ -140,6 +154,14 @@ const JsonSection: React.FC<JsonSectionProps> = ({
           </Select>
         </StyledFormControl>
 
+        <Button
+          variant="contained"
+          size="small"
+          onClick={pathPaginationBack}
+          disabled={path.length <= 1}
+        >
+          {"<"}
+        </Button>
         <StyledFormControl>
           <InputLabel id="goto-select">Go to key</InputLabel>
           <Select
