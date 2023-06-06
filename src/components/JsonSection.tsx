@@ -86,7 +86,6 @@ const JsonSection: React.FC<JsonSectionProps> = ({
       .filter((key) => data[key] != null);
   }, [data]);
 
-
   const isBackToRootDisabled = useMemo(() => {
     return path.length === 1;
   }, [path]);
@@ -234,6 +233,11 @@ const JsonSection: React.FC<JsonSectionProps> = ({
       {isValidJson ? (
         <JsonContainer>
           <ReactJson
+            style={{
+              minWidth: "100%",
+              width: "fit-content",
+              minHeight: "100%",
+            }}
             src={data}
             collapsed={collapsedLevel}
             theme={theme as ThemeKeys}
@@ -298,12 +302,12 @@ const StyledNumberInputWrapper = styled(FormControl)`
 `;
 
 const JsonContainer = styled.div`
-  margin-top: 30px;
+  margin-top: 12px;
   overflow-y: scroll;
   border: 1px solid black;
-  min-height: 74%;
-  max-height: 74%;
-  height: 74%;
+  min-height: 70%;
+  max-height: 70%;
+  height: 70%;
 `;
 
 const ValueKeysContainer = styled.div`
