@@ -86,6 +86,7 @@ const JsonSection: React.FC<JsonSectionProps> = ({
       .filter((key) => data[key] != null);
   }, [data]);
 
+
   const isBackToRootDisabled = useMemo(() => {
     return path.length === 1;
   }, [path]);
