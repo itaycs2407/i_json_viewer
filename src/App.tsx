@@ -32,12 +32,10 @@ function App() {
         <Navbar setPath={setPath} path={path} />
         <Switch>
           <Route
-            exact
-            path="/view"
+            path="/view/:objectId?"
             render={() => <View text={viewJson} setText={setViewJson} />}
           />
           <Route
-            exact
             path="/compare"
             render={() => (
               <Compare

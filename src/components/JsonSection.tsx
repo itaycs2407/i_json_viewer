@@ -15,6 +15,7 @@ import { APP_KEY_THEME, THEME } from "../constants";
 import WhereAmI from "./WhereAmI";
 import { get } from "lodash";
 import EmptySection from "./EmptySection";
+import { v4 as uuidv4 } from "uuid";
 
 interface JsonSectionProps {
   object: any;
@@ -27,6 +28,7 @@ const JsonSection: React.FC<JsonSectionProps> = ({
   addCopyContent,
 }) => {
   const [key, setKey] = useState("");
+  const [jsonKey, setJsonKey] = useState("");
   const [theme, setTheme] = useState("");
   const [collapsedLevel, setCollapsedLevel] = React.useState(1);
   const [data, setData] = useState(object);
@@ -76,6 +78,14 @@ const JsonSection: React.FC<JsonSectionProps> = ({
       .filter((key) => data[key] != null);
   }, [data]);
 
+  const jsonKeys = useMemo(() => {
+    setJsonKey("");
+    return Object.keys(data)
+
+      .filter((key) => typeof data[key] !== "object")
+      .filter((key) => data[key] != null);
+  }, [data]);
+
   const isBackToRootDisabled = useMemo(() => {
     return path.length === 1;
   }, [path]);
@@ -120,6 +130,26 @@ const JsonSection: React.FC<JsonSectionProps> = ({
     setPath((prev) => [...prev, key]);
   };
 
+  const handleJsonKeyChange = (event: SelectChangeEvent<string>) => {
+    const key = event.target.value;
+
+    if (typeof data[key] === "object") {
+      return;
+    }
+
+    setJsonKey(key);
+  };
+
+  const handleJsonKeySelect = () => {
+    if (jsonKey === "") {
+      return;
+    }
+    const objectId = uuidv4();
+
+    localStorage.setItem(objectId, data[jsonKey]);
+    window.open(`/view/${objectId}`, "_blank");
+  };
+
   const pathPaginationBack = () => {
     if (path.length === 2) {
       setData(object);
@@ -133,6 +163,7 @@ const JsonSection: React.FC<JsonSectionProps> = ({
     setPath(["root", ...newPath]);
   };
 
+  console.log(jsonKey);
   return (
     <Wrapper>
       <ActionsJsonContainer>
@@ -212,6 +243,33 @@ const JsonSection: React.FC<JsonSectionProps> = ({
       ) : (
         <EmptySection text="How much time does it take to do copy-paste ?!?!?!" />
       )}
+      <ValueKeysContainer>
+        <StyledFormControl>
+          <InputLabel id="value-keys-select">Value keys</InputLabel>
+          <Select
+            labelId="value-keys-select"
+            id="value-keys-select"
+            value={jsonKey}
+            label="Value keys"
+            onChange={(event) => handleJsonKeyChange(event)}
+            size="small"
+          >
+            {jsonKeys.map((key, index) => (
+              <MenuItem key={index} value={key}>
+                {key}
+              </MenuItem>
+            ))}
+          </Select>
+        </StyledFormControl>
+        <Button
+          variant="contained"
+          size="small"
+          disabled={jsonKey === ""}
+          onClick={handleJsonKeySelect}
+        >
+          Open
+        </Button>
+      </ValueKeysContainer>
     </Wrapper>
   );
 };
@@ -220,6 +278,7 @@ const Wrapper = styled.div`
   width: 50%;
   height: 100%;
   display: flex;
+  position: relative;
   flex-direction: column;
 `;
 
@@ -241,7 +300,18 @@ const JsonContainer = styled.div`
   margin-top: 30px;
   overflow-y: scroll;
   border: 1px solid black;
-  height: 70%;
+  min-height: 74%;
+  max-height: 74%;
+  height: 74%;
+`;
+
+const ValueKeysContainer = styled.div`
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  margin-top: 20px;
+  position: absolute;
+  bottom: 0;
 `;
 
 export default JsonSection;
