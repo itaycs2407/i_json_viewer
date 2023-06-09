@@ -14,6 +14,7 @@ import { get } from "lodash";
 import axios from "axios";
 import CopyContent from "./CopyContent";
 import { ActionContainer, Textarea, TextWrapper } from "../style";
+import { handleUploadFile } from "../utils/utils";
 
 interface TextSectionProps {
   text: string;
@@ -127,6 +128,16 @@ const TextSection: React.FC<TextSectionProps> = ({
         value={text}
       />
       <FetchContainer>
+        <Button variant="contained" component="label" size="small">
+          Upload File
+          <input
+            type="file"
+            hidden
+            accept=".json"
+            onChange={(event) => handleUploadFile(event.target.files, setText)}
+          />
+        </Button>
+
         <StyledTextField
           id="outlined-basic"
           label="Url"
@@ -171,13 +182,14 @@ const TextSection: React.FC<TextSectionProps> = ({
 
 const FetchContainer = styled.div`
   margin-top: 10px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 `;
 
 const StyledTextField = styled(TextField)`
-  width: 85%;
+  width: 65%;
 `;
 
 const ButtonContainer = styled.div`

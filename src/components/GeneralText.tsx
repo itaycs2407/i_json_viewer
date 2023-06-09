@@ -4,6 +4,7 @@ import { ActionContainer, Textarea, TextWrapper } from "../style";
 import { pageColors, PageType } from "../constants";
 import styled from "@emotion/styled";
 import { useHistory } from "react-router-dom";
+import { handleUploadFile } from "../utils/utils";
 
 interface GeneralTextProps {
   type: PageType;
@@ -29,20 +30,6 @@ const GeneralText: React.FC<GeneralTextProps> = ({
     textareaRef.current?.focus();
   };
 
-  const handleUploadFile = (files: FileList | null) => {
-    if (files == null || files.length === 0) {
-      return;
-    }
-
-    const file = files[0];
-    const fileReader = new FileReader();
-    fileReader.onloadend = function () {
-      setText(fileReader.result as string);
-    };
-
-    fileReader.readAsText(file);
-  };
-
   const handleView = () => {
     setViewJson(text);
     setPath("/view");
@@ -64,7 +51,9 @@ const GeneralText: React.FC<GeneralTextProps> = ({
               type="file"
               hidden
               accept=".json"
-              onChange={(event) => handleUploadFile(event.target.files)}
+              onChange={(event) =>
+                handleUploadFile(event.target.files, setText)
+              }
             />
           </Button>
 

@@ -43,10 +43,10 @@ const JsonSection: React.FC<JsonSectionProps> = ({
   });
 
   useEffect(() => {
-    window.addEventListener("copy", handleCopy);
+    window.addEventListener("copy", (event) => handleCopy(event));
 
     return () => {
-      window.removeEventListener("copy", handleCopy);
+      window.removeEventListener("copy", (event) => handleCopy(event));
     };
   }, []);
 
@@ -98,7 +98,8 @@ const JsonSection: React.FC<JsonSectionProps> = ({
     setCollapsedLevel(Number(event.target.value));
   };
 
-  const handleCopy = async () => {
+  const handleCopy = async (event: Event) => {
+    event.stopPropagation();
     const content = await navigator.clipboard.readText();
     addCopyContent(content);
   };
@@ -246,7 +247,7 @@ const JsonSection: React.FC<JsonSectionProps> = ({
           />
         </JsonContainer>
       ) : (
-        <EmptySection text="How much time does it take to do copy-paste ?!?!?!" />
+        <EmptySection text="Nothing to display.... yet" />
       )}
       <ValueKeysContainer>
         <StyledFormControl>
